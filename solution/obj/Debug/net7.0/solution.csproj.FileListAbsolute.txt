@@ -1,0 +1,15 @@
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\bin\Debug\net7.0\solution.exe
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\bin\Debug\net7.0\solution.deps.json
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\bin\Debug\net7.0\solution.runtimeconfig.json
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\bin\Debug\net7.0\solution.dll
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\bin\Debug\net7.0\solution.pdb
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\obj\Debug\net7.0\solution.csproj.AssemblyReference.cache
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\obj\Debug\net7.0\solution.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\obj\Debug\net7.0\solution.AssemblyInfoInputs.cache
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\obj\Debug\net7.0\solution.AssemblyInfo.cs
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\obj\Debug\net7.0\solution.csproj.CoreCompileInputs.cache
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\obj\Debug\net7.0\solution.dll
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\obj\Debug\net7.0\refint\solution.dll
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\obj\Debug\net7.0\solution.pdb
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\obj\Debug\net7.0\solution.genruntimeconfig.cache
+C:\Users\Nick Jonas\Desktop\UoITechnicalProblem\solution\obj\Debug\net7.0\ref\solution.dll
