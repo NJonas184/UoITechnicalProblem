@@ -36,25 +36,54 @@ public class LetterService : ILetterService {
         File.WriteAllText(resultFile, combinedFile);
     }
 
-    public void CheckScholarships(String[] folder) {
+    public List<string> CheckScholarships(string admissionFolder, string[] filesArray) {
+        //returns input files that match
+        
+        var scholarshipFolder = $"{SCHOLARSHIP_PATH}/{admissionFolder}";
+        List<string> idList = new List<string>();
+        foreach(String file in filesArray){
+            string temp = file.Split('-')[1];
+            string id = temp.Split('.')[0];
+            System.Console.WriteLine(id); //Delete check
+            string scholarshipFile = $"scholarship-{id}.txt";
+            if(File.Exists($"{scholarshipFolder}/{scholarshipFile}")){
+                string resultPath = $"{OUTPUT_PATH}/{admissionFolder}";
+                if(Directory.Exists(resultPath != True)){
+                    Directory.CreateDirectory(resultPath);
+                }
+                string resultFile = $"{resultPath}/CombinedLetters-{id}.txt";
+                string admissionFilePath = $"{ADMISSION_PATH}/{admissionFolder}/{file}";
+                string scholarshipFilePath = $"{scholarShipFolder}/{scholarshipFile}";
+                CombineTwoLetters(admissionFilePath, scholarshipFilePath, resultFile);
+                idList.Add(id);
+            }
+        }
+        return idList;
         
     }
 
-    public static string CombineAllLetters() {
+
+
+    public static List<string> CombineAllLetters() {
+        //Function that runs through all admission folders and checks corresponding scholarship folders
         var admissionDirectories = Directory.GetDirectories(ADMISSION_PATH);
+        //Add solution string
         foreach(string folder in admissionDirectories){
             int files = Directory.GetFiles(folder).Count();
             if(files > 0)
             {
-                CheckScholarships(folder);
+                //Add Archive check
+                List<string> idList = CheckScholarships(folder, Directory.GetFiles(folder));
+                
             }
         }
-        return "Not working";
+        return null;
     }
 
     public static void Main(string[] args) {
         
         System.Console.WriteLine(CombineAllLetters());
+        // Add report generator
     }
 
 }
