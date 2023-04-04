@@ -14,6 +14,14 @@ public interface ILetterService {
 
 public class LetterService : ILetterService {
 
+    static string PARENT = "solution";
+    static string PARENTDIRECTORY = $"{Directory.GetParent(PARENT)}";
+    static string PROJECTDIRECTORY = $"{Directory.GetParent(PARENTDIRECTORY)}";
+    static string ARCHIVE_PATH = $"{PROJECTDIRECTORY}/CombinedLetters/Archive";
+    static string INPUT_PATH = $"{PROJECTDIRECTORY}/CombinedLetters/Input";
+    static string ADMISSION_PATH = $"{INPUT_PATH}/Admission";
+    static string SCHOLARSHIP_PATH = $"{INPUT_PATH}/Scholarship";
+    static string OUTPUT_PATH = $"{PROJECTDIRECTORY}/CombinedLetters/Output";
 
     public void CombineTwoLetters(string inputFile1, string inputFile2, string resultFile) {
         // 1. Read both files
@@ -28,9 +36,25 @@ public class LetterService : ILetterService {
         File.WriteAllText(resultFile, combinedFile);
     }
 
-    public static void Main(string[] args){
+    public void CheckScholarships(String[] folder) {
+        
+    }
 
-        System.Console.WriteLine($"Hello World!");
+    public static string CombineAllLetters() {
+        var admissionDirectories = Directory.GetDirectories(ADMISSION_PATH);
+        foreach(string folder in admissionDirectories){
+            int files = Directory.GetFiles(folder).Count();
+            if(files > 0)
+            {
+                CheckScholarships(folder);
+            }
+        }
+        return "Not working";
+    }
+
+    public static void Main(string[] args) {
+        
+        System.Console.WriteLine(CombineAllLetters());
     }
 
 }
