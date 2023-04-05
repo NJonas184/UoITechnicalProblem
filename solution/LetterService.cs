@@ -50,7 +50,7 @@ public class LetterService : ILetterService {
             string temp = file.Split('-')[1];
             string id = temp.Split('.')[0];
             System.Console.WriteLine(id); //Delete check
-            string scholarshipFile = $"scholarship-{id}";
+            string scholarshipFile = $"scholarship-{id}.txt";
             System.Console.WriteLine($"{scholarshipFolder}/{scholarshipFile}");
             if(File.Exists($"{scholarshipFolder}/{scholarshipFile}")){
                 System.Console.WriteLine("True");
@@ -84,16 +84,19 @@ public class LetterService : ILetterService {
             int files = Directory.GetFiles(folder).Count();
             if(files > 0)
             {
-                //Add Archive check
                 List<string> temp = CheckScholarships(folderName, Directory.GetFiles(folder));
                 foreach(string id in temp){
                     idList.Add(id);
                 }
                 
             }
-            //Directory.Move(folder, $"{ARCHIVE_PATH}/Admission/{folderName}");
+            Directory.Move(folder, $"{ARCHIVE_PATH}/Admission/{folderName}");
             var scholarshipFolder = $"{SCHOLARSHIP_PATH}/{folderName}";
-            //Directory.Move(scholarshipFolder,$"{ARCHIVE_PATH}/Scholarship/{folderName}");
+            if(Directory.Exists(scholarshipFolder)){
+                //Check to see if scholarship exists
+                Directory.Move(scholarshipFolder,$"{ARCHIVE_PATH}/Scholarship/{folderName}");
+            }
+            
         }
         return idList;
     }

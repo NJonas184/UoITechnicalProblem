@@ -1,6 +1,7 @@
 04/05/2023 Report
 -----------------------------
 
-Number of Combined Letters: 2
+Number of Combined Letters: 3
 	01
 	03
+	06
