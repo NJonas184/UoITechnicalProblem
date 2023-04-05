@@ -42,9 +42,8 @@ public class LetterService : ILetterService {
     public List<string> CheckScholarships(string admissionFolder, string[] filesArray) {
         //returns input files that match
         
-        string[] folders = admissionFolder.Split(@"\");
-        string datedFolder = folders[folders.Length - 1];
-        var scholarshipFolder = $"{SCHOLARSHIP_PATH}/{datedFolder}";
+        
+        var scholarshipFolder = $"{SCHOLARSHIP_PATH}/{admissionFolder}";
         List<string> idList = new List<string>();
         foreach(String file in filesArray){
             System.Console.WriteLine(file);
@@ -55,7 +54,7 @@ public class LetterService : ILetterService {
             System.Console.WriteLine($"{scholarshipFolder}/{scholarshipFile}");
             if(File.Exists($"{scholarshipFolder}/{scholarshipFile}")){
                 System.Console.WriteLine("True");
-                string resultPath = $"{OUTPUT_PATH}/{datedFolder}";
+                string resultPath = $"{OUTPUT_PATH}/{admissionFolder}";
                 if(Directory.Exists(resultPath)!= true){
                     Directory.CreateDirectory(resultPath);
                 }
@@ -79,14 +78,18 @@ public class LetterService : ILetterService {
         var admissionDirectories = Directory.GetDirectories(ADMISSION_PATH);
         //Add solution string
         foreach(string folder in admissionDirectories){
+            string[] folderArray = folder.Split(@"\");
+            string folderName = folderArray[folderArray.Length - 1];
             int files = Directory.GetFiles(folder).Count();
             if(files > 0)
             {
                 //Add Archive check
-                List<string> idList = CheckScholarships(folder, Directory.GetFiles(folder));
+                List<string> idList = CheckScholarships(folderName, Directory.GetFiles(folder));
                 
             }
-            //Directory.Move()
+            Directory.Move(folder, $"{ARCHIVE_PATH}/Admission/{folderName}");
+            var scholarshipFolder = $"{SCHOLARSHIP_PATH}/{folderName}";
+            Directory.Move(scholarshipFolder,$"{ARCHIVE_PATH}/Scholarship/{folderName}");
         }
         return null;
     }
@@ -95,6 +98,7 @@ public class LetterService : ILetterService {
         
         LetterService letterService = new LetterService();
         var idList = letterService.CombineAllLetters();
+        //Add report functionality
     }
 
 }
