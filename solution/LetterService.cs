@@ -76,6 +76,7 @@ public class LetterService : ILetterService {
     public List<string> CombineAllLetters() {
         //Function that runs through all admission folders and checks corresponding scholarship folders
         var admissionDirectories = Directory.GetDirectories(ADMISSION_PATH);
+        List<string> idList = new List<string>();
         //Add solution string
         foreach(string folder in admissionDirectories){
             string[] folderArray = folder.Split(@"\");
@@ -84,21 +85,37 @@ public class LetterService : ILetterService {
             if(files > 0)
             {
                 //Add Archive check
-                List<string> idList = CheckScholarships(folderName, Directory.GetFiles(folder));
+                List<string> temp = CheckScholarships(folderName, Directory.GetFiles(folder));
+                foreach(string id in temp){
+                    idList.Add(id);
+                }
                 
             }
-            Directory.Move(folder, $"{ARCHIVE_PATH}/Admission/{folderName}");
+            //Directory.Move(folder, $"{ARCHIVE_PATH}/Admission/{folderName}");
             var scholarshipFolder = $"{SCHOLARSHIP_PATH}/{folderName}";
-            Directory.Move(scholarshipFolder,$"{ARCHIVE_PATH}/Scholarship/{folderName}");
+            //Directory.Move(scholarshipFolder,$"{ARCHIVE_PATH}/Scholarship/{folderName}");
         }
-        return null;
+        return idList;
     }
 
     public static void Main(string[] args) {
         
         LetterService letterService = new LetterService();
-        var idList = letterService.CombineAllLetters();
-        //Add report functionality
+        List<string> idList = letterService.CombineAllLetters();
+        DateTime today = DateTime.Today;
+
+        string report = $"{today.ToString("MM/dd/yyyy")} Report\n-----------------------------\n\n";
+        report = report + $"Number of Combined Letters: {idList.Count}";
+        //report = report + $"\n\t{idList}";
+        foreach(string id in idList){
+            //System.Console.WriteLine(id);
+            report = report + $"\n\t{id}";
+        }
+
+        System.Console.WriteLine(report);
+
+        File.WriteAllText($"{OUTPUT_PATH}/{today.ToString("MM-dd-yyyy")}-Report.txt", report);
+    
     }
 
 }
