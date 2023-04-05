@@ -30,8 +30,11 @@ public class LetterService : ILetterService {
         // 4. Write in resultFile
 
         string fileOne = File.ReadAllText(inputFile1);
+        System.Console.WriteLine(fileOne);
         string fileTwo = File.ReadAllText(inputFile2);
+        System.Console.WriteLine(fileTwo);
         string combinedFile = $"{fileOne}\n\n{fileTwo}";
+        System.Console.WriteLine(combinedFile);
 
         File.WriteAllText(resultFile, combinedFile);
     }
@@ -39,21 +42,28 @@ public class LetterService : ILetterService {
     public List<string> CheckScholarships(string admissionFolder, string[] filesArray) {
         //returns input files that match
         
-        var scholarshipFolder = $"{SCHOLARSHIP_PATH}/{admissionFolder}";
+        string[] folders = admissionFolder.Split(@"\");
+        string datedFolder = folders[folders.Length - 1];
+        var scholarshipFolder = $"{SCHOLARSHIP_PATH}/{datedFolder}";
         List<string> idList = new List<string>();
         foreach(String file in filesArray){
+            System.Console.WriteLine(file);
             string temp = file.Split('-')[1];
             string id = temp.Split('.')[0];
             System.Console.WriteLine(id); //Delete check
-            string scholarshipFile = $"scholarship-{id}.txt";
+            string scholarshipFile = $"scholarship-{id}";
+            System.Console.WriteLine($"{scholarshipFolder}/{scholarshipFile}");
             if(File.Exists($"{scholarshipFolder}/{scholarshipFile}")){
-                string resultPath = $"{OUTPUT_PATH}/{admissionFolder}";
-                if(Directory.Exists(resultPath != True)){
+                System.Console.WriteLine("True");
+                string resultPath = $"{OUTPUT_PATH}/{datedFolder}";
+                if(Directory.Exists(resultPath)!= true){
                     Directory.CreateDirectory(resultPath);
                 }
                 string resultFile = $"{resultPath}/CombinedLetters-{id}.txt";
-                string admissionFilePath = $"{ADMISSION_PATH}/{admissionFolder}/{file}";
-                string scholarshipFilePath = $"{scholarShipFolder}/{scholarshipFile}";
+                string admissionFilePath = $"{file}";
+                string scholarshipFilePath = $"{scholarshipFolder}/{scholarshipFile}";
+
+                //Needs to be called by an object, change functions to be non-static and run using an object.
                 CombineTwoLetters(admissionFilePath, scholarshipFilePath, resultFile);
                 idList.Add(id);
             }
@@ -64,7 +74,7 @@ public class LetterService : ILetterService {
 
 
 
-    public static List<string> CombineAllLetters() {
+    public List<string> CombineAllLetters() {
         //Function that runs through all admission folders and checks corresponding scholarship folders
         var admissionDirectories = Directory.GetDirectories(ADMISSION_PATH);
         //Add solution string
@@ -76,14 +86,15 @@ public class LetterService : ILetterService {
                 List<string> idList = CheckScholarships(folder, Directory.GetFiles(folder));
                 
             }
+            //Directory.Move()
         }
         return null;
     }
 
     public static void Main(string[] args) {
         
-        System.Console.WriteLine(CombineAllLetters());
-        // Add report generator
+        LetterService letterService = new LetterService();
+        var idList = letterService.CombineAllLetters();
     }
 
 }
